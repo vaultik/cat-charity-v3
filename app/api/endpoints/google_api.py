@@ -1,4 +1,6 @@
+from http import HTTPStatus
 from aiogoogle import Aiogoogle
+from aiogoogle.excs import AiogoogleError, HTTPError
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -26,7 +28,7 @@ async def get_report(
     projects = await charity_project_crud.get_projects_by_completion_rate(
         session
     )
-    spreadsheet_id = await create_spreadsheets(wrapper_services)
+    spreadsheet_id, spreadsheet_url = await create_spreadsheets(wrapper_services)
     await set_user_permissions(spreadsheet_id, wrapper_services)
     try:
         await update_spreadsheets_value(
@@ -34,9 +36,9 @@ async def get_report(
             projects,
             wrapper_services
         )
-    except Exception as e:
+    except (AiogoogleError, HTTPError, ValueError) as e:
         raise HTTPException(
-            status_code=500,
+            status_code=HTTPStatus.INTERNAL_SERVER_ERROR,
             detail=f'Ошибки при записи данных: {e}'
         )
-    return f"https://docs.google.com/spreadsheets/d/{spreadsheet_id}"
+    return spreadsheet_url

@@ -7,7 +7,7 @@ from app.core.config import settings
 from app.core.constants import FORMAT, SPREADSHEET_BODY_TEMPLATE
 
 
-async def create_spreadsheets(wrapper_services: Aiogoogle) -> str:
+async def create_spreadsheets(wrapper_services: Aiogoogle) -> tuple[str, str]:
     now_date_time = dt.now().strftime(FORMAT)
     service = await wrapper_services.discover('sheets', 'v4')
     spreadsheet_body = copy.deepcopy(SPREADSHEET_BODY_TEMPLATE)
@@ -18,7 +18,7 @@ async def create_spreadsheets(wrapper_services: Aiogoogle) -> str:
     response = await wrapper_services.as_service_account(
         service.spreadsheets.create(json=spreadsheet_body)
     )
-    return response['spreadsheetId']
+    return response['spreadsheetId'], response['spreadsheetUrl']
 
 
 async def set_user_permissions(
