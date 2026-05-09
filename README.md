@@ -4,8 +4,8 @@ A donation platform for cat support projects with Google Sheets reporting.
 Built with FastAPI + FastAPI Users + SQLAlchemy + Alembic + Aiogoogle.
  
 > **This is v3** — adds Google Sheets export via Google API.  
-> [v1](https://github.com/Marakes/cat-charity-v1) — core donation logic only.  
-> [v2](https://github.com/Marakes/cat-charity-v2) — adds user authentication.
+> [v1](https://github.com/vaultik/cat-charity-v1) — core donation logic only.  
+> [v2](https://github.com/vaultik/cat-charity-v2) — adds user authentication.
  
 ## Features
  
@@ -43,7 +43,7 @@ Before running, you need a Google Cloud service account:
  
 ```bash
 # Clone the repository
-git clone https://github.com/Marakes/cat-charity-v3
+git clone https://github.com/vaultik/cat-charity-v3
 cd cat-charity-v3
  
 # Create and activate virtual environment
@@ -116,4 +116,4 @@ Returns a URL to the newly created spreadsheet with completed projects sorted by
  
 ## Author
  
-[github.com/Marakes](https://github.com/Marakes)
+[github.com/vaultik](https://github.com/vaultik)
